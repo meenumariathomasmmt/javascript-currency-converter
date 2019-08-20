@@ -1,0 +1,144 @@
+<html>
+<link rel="stylesheet" type="text/css" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css">
+<div class="jumbotron">
+
+  <div class="container">
+
+   <h2>Currency Calculator</h2>
+
+   <p class="lead">Convert the currency</p>
+
+   <form class="form-inline">
+
+     <div class="form-group mb-2">
+
+        <input type="number" class="form-control" id="amount"/>
+
+     </div>
+
+     <div class="form-group mx-sm-3 mb-2">
+
+        <select class="form-control" id="currency-1" required>
+
+          <option>AUD</option>
+
+          <option>CAD</option>
+
+          <option>CNY</option>
+
+          <option>CZK</option>
+
+          <option>DKK</option>
+
+          <option>EUR</option>
+
+          <option>GBP</option>
+
+          <option>JPY</option>
+
+          <option>NOK</option>
+
+          <option>NZD</option>
+
+          <option>USD</option>
+
+        </select>
+
+      </div>
+
+      <div class="form-group mx-sm-3 mb-2">
+
+        <label>convert to</label>
+
+        <select class="form-control" id="currency-2" required>
+
+          <option>AUD</option>
+
+          <option>CAD</option>
+
+          <option>CNY</option>
+
+          <option>CZK</option>
+
+          <option>DKK</option>
+
+          <option>EUR</option>
+
+          <option>GBP</option>
+
+          <option>JPY</option>
+
+          <option>NOK</option>
+
+          <option>NZD</option>
+
+          <option>USD</option>
+
+        </select>
+
+      </div>  
+
+      <button class="btn calculate-btn btn-primary mb-2">Show me the result!</button>
+
+    </form>
+
+    <div class="result">
+
+      <p>
+
+        <span class="given-amount"></span> 
+
+        <span class="base-currency"></span>
+
+        <span class="final-result"></span> 
+
+        <span class="second-currency"></span>
+
+      </p>
+
+    </div>
+
+  </div> 
+
+</div>
+
+<script>
+var crrncy = {'AUD': {'CAD':0.9609, 'CNY':5.1661, 'CZK': 18.7627, 'DKK': 5.0576, 'EUR': 0.6797,  'GBP': 0.5337, 'JPY': 100.4101, 'NOK': 5.8900, 'NZD': 1.0801, 'USD': 0.8371}, 'CAD': {'AUD':1.0406, 'CNY':7.0426, 'CZK': 19.5248, 'DKK': 5.2630, 'EUR': 0.7073,  'GBP': 0.5554, 'JPY': 104.4884, 'NOK': 6.1292, 'NZD': 1.1239, 'USD': 0.8711}, 'CNY': {'AUD':0.1935, 'CAD':0.1859, 'CZK': 3.6310, 'DKK': 0.9787, 'EUR': 0.1315,  'GBP': 0.1032, 'JPY': 19.4319, 'NOK': 1.1398, 'NZD': 0.2090, 'USD': 0.1620}, 'CZK': {'AUD':0.0532, 'CAD':0.0511, 'CNY': 0.2751, 'DKK': 0.2693, 'EUR': 0.0362,  'GBP': 0.0284, 'JPY': 5.3475, 'NOK': 0.3136, 'NZD': 0.0575, 'USD': 0.0445}, 'DKK': {'AUD':0.1975, 'CAD':0.1898, 'CNY': 1.0207, 'CZK': 3.7071, 'EUR': 0.1343,  'GBP': 0.1054, 'JPY': 19.8390, 'NOK': 1.1637, 'NZD': 0.2134, 'USD': 0.1653}, 'EUR': {'AUD': 1.4711, 'CAD': 1.4136, 'CNY': 7.6002, 'CZK': 27.6028, 'DKK': 7.4405,  'GBP': 0.7852, 'JPY': 147.7184, 'NOK': 8.6651, 'NZD': 1.5890, 'USD': 1.2315}}
+
+var btn = document.querySelector('.calculate-btn');
+var baseCurrencyInput = document.getElementById('currency-1');
+var secondCurrencyInput = document.getElementById('currency-2');
+var amountInput = document.getElementById('amount');
+var toShowAmount = document.querySelector('.given-amount');
+var toShowBase = document.querySelector('.base-currency');
+var toShowSecond = document.querySelector('.second-currency');
+var toShowResult = document.querySelector('.final-result');
+
+function convertCurrency(event) {
+  event.preventDefault();
+  var amount = amountInput.value;
+  var from = baseCurrencyInput.value;
+  var to = secondCurrencyInput.value;
+  var result = 0;
+  
+  try{
+    if (from == to){
+      result = amount;
+    } else {
+     result = amount * crrncy[from][to];
+  }
+  }
+  catch(err) {
+    result = amount * (1 / crrncy[to][from]);
+  }
+  
+  toShowAmount.innerHTML = amount;
+  toShowBase.textContent = from + ' = ';
+  toShowSecond.textContent = to;
+  toShowResult.textContent = result; 
+}
+
+btn.addEventListener('click', convertCurrency);
+
+</script>
+</html>
